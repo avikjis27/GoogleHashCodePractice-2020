@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import sys
+import os
 
 def validateInput(required_pizza_slice, number_of_pizza_slices, types_of_pizza):
     isValidInput = True
@@ -29,7 +30,6 @@ def calculateRequiredPizzaSlice(required_pizza_slice, number_of_slices):
     current_computed_result = [None] * (required_pizza_slice + 1)
     
     for index, number_of_slice in enumerate(number_of_slices):
-        print(len(number_of_slices) - index, " ")
         for required_slice in range(required_pizza_slice + 1):
             if required_slice == 0:
                 current_computed_result[required_slice] = {'total_slice': 0, 'ordered_pizza_types':[]} 
@@ -49,16 +49,17 @@ def calculateRequiredPizzaSlice(required_pizza_slice, number_of_slices):
     
     return last_computed_result
 
-def generateOutput(result, max_required_slice, number_of_slices):
+def generateOutput(result, max_required_slice, number_of_slices,filename):
     ordered_pizza_types = result[-1].get('ordered_pizza_types')
     first_line = len(ordered_pizza_types)
     second_line = ""
     for pizza_type in ordered_pizza_types:
         second_line = second_line + " " +str(pizza_type)
-    with open('result.out', 'w') as output_file:
+    with open(f"{filename}.out", 'w') as output_file:
          output_file.write(str(first_line)+"\n"+second_line.strip())
 
 if __name__ == '__main__':
     max_required_slice, number_of_slices = processInput(sys.argv[1])
+    filename = os.path.basename(sys.argv[1])
     result = calculateRequiredPizzaSlice(max_required_slice, number_of_slices)
-    generateOutput(result, max_required_slice, number_of_slices)
+    generateOutput(result, max_required_slice, number_of_slices, filename)
