@@ -31,6 +31,7 @@ def calculateRequiredPizzaSlice(required_pizza_slice, number_of_slices):
     
     for index, number_of_slice in enumerate(number_of_slices):
         for required_slice in range(required_pizza_slice + 1):
+            print(f"Row->{index}, Col->{required_slice}\n")
             if required_slice == 0:
                 current_computed_result[required_slice] = {'total_slice': 0, 'ordered_pizza_types':[]} 
             elif number_of_slice > required_slice:
