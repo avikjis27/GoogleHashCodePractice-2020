@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 import sys
-import numpy as np
 import os
-import copy 
-import time
-from memory_profiler import profile
 
 def validateInput(required_pizza_slice, number_of_pizza_slices, types_of_pizza):
     isValidInput = True
