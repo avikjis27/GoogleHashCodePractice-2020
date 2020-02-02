@@ -3,13 +3,13 @@ import sys
 import os
 import copy 
 
-def validateInput(required_pizza_slice, number_of_pizza_slices, types_of_pizza):
+def validateInput(required_pizza_slice, number_of_pizza_slices, pizza_types):
     isValidInput = True
-    if len(number_of_pizza_slices) != types_of_pizza:
+    if len(number_of_pizza_slices) != pizza_types:
         isValidInput = False
     if required_pizza_slice > pow(10,9):
         isValidInput = False
-    if types_of_pizza > pow(10,5):
+    if pizza_types > pow(10,5):
         isValidInput = False
     return isValidInput
 
@@ -25,11 +25,11 @@ def processInput(file_name):
     else:
         raise Exception('Not a valid input')
 
-def dp_solution(max_required_slices, type_of_pizzas):
+def dynamicSolution(max_required_slices, pizza_types):
     pizza_type_map = {0: []}
     last_computed_result = [0] * (max_required_slices + 1)
     got_result = False
-    for index, slices in enumerate(type_of_pizzas):
+    for index, slices in enumerate(pizza_types):
         current_computed_result = [0] * (max_required_slices + 1)
         current_map = {0: []}
         for required_slices in range(max_required_slices + 1):
@@ -57,12 +57,12 @@ def dp_solution(max_required_slices, type_of_pizzas):
            break
     return max_possible_slices, required_pizza_types
 
-def greedySolution(max_required_slice, number_of_slices):
+def greedySolution(max_required_slice, pizza_types):
     pizza_types_orderd_dsc = []
     ordered_till = 0
-    for index in range(len(number_of_slices)-1, -1, -1):
-        if (ordered_till + number_of_slices[index] <= max_required_slice):
-            ordered_till = ordered_till + number_of_slices[index]
+    for index in range(len(pizza_types)-1, -1, -1):
+        if (ordered_till + pizza_types[index] <= max_required_slice):
+            ordered_till = ordered_till + pizza_types[index]
             pizza_types_orderd_dsc = [index] + pizza_types_orderd_dsc
         else:
             break
@@ -79,11 +79,11 @@ def generateOutput(max_required_slice, number_of_slices,filename):
 
 if __name__ == '__main__':
     
-    max_required_slice, number_of_slices = processInput(sys.argv[1])
+    max_required_slice, pizza_types = processInput(sys.argv[1])
     filename = os.path.basename(sys.argv[1])
-    ordered_using_greedy, pizza_types_orderd_greedy = greedySolution(max_required_slice, number_of_slices)
+    ordered_using_greedy, pizza_types_orderd_greedy = greedySolution(max_required_slice, pizza_types)
     order_remaining = max_required_slice - ordered_using_greedy
-    ordered_using_dp, pizza_types_orderd_dp = dp_solution(order_remaining, number_of_slices)
+    ordered_using_dp, pizza_types_orderd_dp = dynamicSolution(order_remaining, pizza_types)
     max_possible_slices = ordered_using_greedy + ordered_using_dp
     required_pizza_types = pizza_types_orderd_dp + pizza_types_orderd_greedy
     print("ordered_using_dp",ordered_using_dp)
