@@ -74,7 +74,7 @@ def generateOutput(max_required_slice, number_of_slices,filename):
     second_line = ""
     for pizza_type in number_of_slices:
         second_line = second_line + " " +str(pizza_type)
-    with open(f"{filename}.out", 'w') as output_file:
+    with open(f"output/{filename}.out", 'w') as output_file:
          output_file.write(str(first_line)+"\n"+second_line.strip())
 
 if __name__ == '__main__':
@@ -86,5 +86,7 @@ if __name__ == '__main__':
     ordered_using_dp, pizza_types_orderd_dp = dp_solution(order_remaining, number_of_slices)
     max_possible_slices = ordered_using_greedy + ordered_using_dp
     required_pizza_types = pizza_types_orderd_dp + pizza_types_orderd_greedy
+    print("ordered_using_dp",ordered_using_dp)
+    print("pizza_types_orderd_dp", pizza_types_orderd_dp)
     print(f"Total Ordered -> {max_possible_slices}")
     generateOutput(max_possible_slices, required_pizza_types, filename)
